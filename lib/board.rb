@@ -1,14 +1,15 @@
 require_relative 'check_win'
 
+# Starts the game, allowing player selection and board updates
 class TicTacToe
   include Winnable
   attr_reader :new_board
 
   def initialize
     @new_board = [
-      ['1', '2', '3'],
-      ['4', '5', '6'],
-      ['7', '8', '9']
+      %w[1 2 3],
+      %w[4 5 6],
+      %w[7 8 9]
     ]
     @moves = 0
     @move_flag = 0
@@ -23,14 +24,15 @@ class TicTacToe
   private
 
   def start_game
-    9.times do |player| unless @win_flag == true
-      if @move_flag == 0
-        select_player(1, 1)
-        update_board(Rainbow("x").goldenrod)
-      else
-        select_player(2, 0)
-        update_board(Rainbow("o").darkturquoise)
-      end
+    9.times do
+      unless @win_flag == true
+        if @move_flag == 0
+          select_player(1, 1)
+          update_board(Rainbow('x').goldenrod)
+        else
+          select_player(2, 0)
+          update_board(Rainbow('o').darkturquoise)
+        end
       end
     end
   end
@@ -43,7 +45,7 @@ class TicTacToe
       @selection = gets.chomp
     end
     while @selected.include?(@selection) == true
-      print "That space is taken. Choose another: "
+      print 'That space is taken. Choose another: '
       @selection = gets.chomp
     end
     @selected << @selection
@@ -54,13 +56,13 @@ class TicTacToe
 
   def update_board(play)
     @new_board.each do |element|
-      if element.is_a?(Array)
-        element.map! do |sub_element|
-          if sub_element == @selection
-            sub_element = play
-          else 
-            sub_element
-          end
+      next unless element.is_a?(Array)
+
+      element.map! do |sub_element|
+        if sub_element == @selection
+          play
+        else
+          sub_element
         end
       end
     end
@@ -70,13 +72,13 @@ class TicTacToe
   end
 
   def display_board
-    self.print_board
+    print_board
     puts "\n"
   end
 
   def print_board
     @new_board.each do |row|
-      print "|"
+      print '|'
       row.each { |cell| print "#{cell}|" }
       puts "\n"
     end
