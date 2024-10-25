@@ -1,5 +1,5 @@
 class TicTacToe
-  attr_reader :new_board, :win_flag, :moves
+  attr_reader :new_board, :win_flag, :moves, :selected
 
   def initialize
     @move_flag = 0
@@ -11,6 +11,7 @@ class TicTacToe
     ]
     @win_flag = false
     @moves = 0
+    @selected = []
     display_board
     puts "Pick the number that corresponds with the position you wish to choose."
     start_game
@@ -34,6 +35,15 @@ class TicTacToe
   def select_player(player_number, move_flag)
     print "Player #{player_number}, make your move: "
     @selection = gets.chomp
+    while @selection !~ /^[1-9]$/
+      print "You need to select a number between 1 to 9. Make your move: "
+      @selection = gets.chomp
+    end
+    while @selected.include?(@selection) == true
+      print "That space is taken. Choose another: "
+      @selection = gets.chomp
+    end
+    @selected << @selection
     puts "\n"
     @move_flag = move_flag
     @moves += 1
