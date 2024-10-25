@@ -1,16 +1,19 @@
+require_relative 'check_win'
+
 class TicTacToe
-  attr_reader :new_board, :win_flag, :moves, :selected
+  include Winnable
+  attr_reader :new_board
 
   def initialize
-    @move_flag = 0
-    @selection = 0
     @new_board = [
       ['1', '2', '3'],
       ['4', '5', '6'],
       ['7', '8', '9']
     ]
-    @win_flag = false
     @moves = 0
+    @move_flag = 0
+    @win_flag = false
+    @selection = 0
     @selected = []
     display_board
     puts "Pick the number that corresponds with the position you wish to choose."
@@ -36,7 +39,7 @@ class TicTacToe
     print "Player #{player_number}, make your move: "
     @selection = gets.chomp
     while @selection !~ /^[1-9]$/
-      print "You need to select a number between 1 to 9. Make your move: "
+      print "You need to select a number between 1 to 9, Player #{player_number}. Make your move: "
       @selection = gets.chomp
     end
     while @selected.include?(@selection) == true
@@ -63,34 +66,7 @@ class TicTacToe
     end
     display_board
     check_win
-    if @win_flag == true && @move_flag == 1
-      puts "Player 1 wins!"
-    elsif @win_flag == true && @move_flag == 0
-      puts "Player 2 wins!"
-    elsif @win_flag == false && @moves == 9
-      puts "Neither wins. It\'s a draw!"
-    end
-  end
-
-  def check_win
-    case
-    when new_board.any?(["x", "x", "x"]) == true
-      @win_flag = true
-    when new_board.any?(["o", "o", "o"]) == true
-      @win_flag = true
-    when new_board[0][0] == new_board[1][0] && new_board[1][0] == new_board[2][0]
-      @win_flag = true
-    when new_board[0][1] == new_board[1][1] && new_board[1][1] == new_board[2][1]
-      @win_flag = true
-    when new_board[0][2] == new_board[1][2] && new_board[1][2] == new_board[2][2]
-      @win_flag = true
-    when new_board[0][0] == new_board[1][1] && new_board[1][1] == new_board[2][2]
-      @win_flag = true
-    when new_board[0][2] == new_board[1][1] && new_board[1][1] == new_board[2][0]
-      @win_flag = true
-    else
-      @win_flag
-    end
+    announce_results
   end
 
   def display_board
