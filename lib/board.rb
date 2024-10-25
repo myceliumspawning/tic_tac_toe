@@ -16,7 +16,7 @@ class TicTacToe
     @selection = 0
     @selected = []
     display_board
-    puts "Pick the number that corresponds with the position you wish to choose."
+    puts Rainbow("Pick the number that corresponds with the position you wish to choose.\n").tomato
     start_game
   end
 
@@ -26,10 +26,10 @@ class TicTacToe
     9.times do |player| unless @win_flag == true
       if @move_flag == 0
         select_player(1, 1)
-        update_board("x")
+        update_board(Rainbow("x").goldenrod)
       else
         select_player(2, 0)
-        update_board("o")
+        update_board(Rainbow("o").darkturquoise)
       end
       end
     end

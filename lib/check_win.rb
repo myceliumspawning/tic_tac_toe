@@ -22,11 +22,11 @@ module Winnable
 
   def announce_results
     if @win_flag == true && @move_flag == 1
-      puts "Player 1 wins!"
+      puts Rainbow("Player 1 wins!").blink
     elsif @win_flag == true && @move_flag == 0
-      puts "Player 2 wins!"
+      puts Rainbow("Player 2 wins!").blink
     elsif @win_flag == false && @moves == 9
-      puts "Neither wins. It\'s a draw!"
+      puts Rainbow("Neither wins. It\'s a draw!").blink
     end
   end
 end
